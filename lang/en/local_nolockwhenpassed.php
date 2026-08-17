@@ -13,4 +13,13 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Language strings for local_nolockwhenpassed.
+ *
+ * @package   local_nolockwhenpassed
+ * @copyright 2017 James Pratt
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 $string['pluginname'] = 'nolockwhenpassed';

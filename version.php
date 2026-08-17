@@ -14,8 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Version metadata for local_nolockwhenpassed.
+ *
+ * @package   local_nolockwhenpassed
+ * @copyright 2017 James Pratt
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
-$plugin->version  = 2017122000;   // The (date) version of this plugin
-$plugin->requires = 2017051500.09;   // Requires this Moodle version
+defined('MOODLE_INTERNAL') || die();
+
+$plugin->version  = 2017122000;   // The (date) version of this plugin.
+$plugin->requires = 2017051500.09;   // Requires this Moodle version.
 $plugin->cron = 0;
 $plugin->component = 'local_nolockwhenpassed';
