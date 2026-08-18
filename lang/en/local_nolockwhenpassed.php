@@ -23,3 +23,5 @@
  */
 
 $string['pluginname'] = 'nolockwhenpassed';
+$string['privacy:metadata'] = 'Grade unlocking does not store personal data itself. Quiz attempts and grades are stored by ' .
+    'Moodle core and activity subsystems.';
