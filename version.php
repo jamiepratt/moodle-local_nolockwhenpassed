@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2026081701;   // The (date) version of this plugin.
-$plugin->requires = 2020061500;   // Requires this Moodle version.
+$plugin->version  = 2026081900;   // The (date) version of this plugin.
+$plugin->requires = 2026042000;   // Requires this Moodle version.
 $plugin->cron = 0;
 $plugin->component = 'local_nolockwhenpassed';

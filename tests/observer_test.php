@@ -19,7 +19,7 @@ namespace local_nolockwhenpassed;
 use context_module;
 use grade_grade;
 use grade_item;
-use mod_quiz\event\attempt_submitted;
+use mod_quiz\event\attempt_graded;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -28,7 +28,7 @@ require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 require_once($CFG->libdir . '/gradelib.php');
 
 /**
- * Tests submitted-attempt grade unlocking.
+ * Tests graded-attempt grade unlocking.
  *
  * @package   local_nolockwhenpassed
  * @copyright 2026 Jamie Pratt
@@ -43,7 +43,7 @@ final class observer_test extends \advanced_testcase {
         $this->resetAfterTest();
         [$event, $grade] = $this->create_attempt_event(8.0, 10.0, true, true);
 
-        observer::attempt_submitted($event);
+        observer::attempt_graded($event);
 
         $grade->update_from_db();
         $this->assertFalse($grade->is_locked());
@@ -57,7 +57,7 @@ final class observer_test extends \advanced_testcase {
         $this->resetAfterTest();
         [$event, $grade] = $this->create_attempt_event(7.99, 10.0, true, true);
 
-        observer::attempt_submitted($event);
+        observer::attempt_graded($event);
 
         $grade->update_from_db();
         $this->assertTrue($grade->is_locked());
@@ -75,7 +75,7 @@ final class observer_test extends \advanced_testcase {
         $this->resetAfterTest();
         [$event, $grade] = $this->create_attempt_event(10.0, 10.0, $locked, $overridden);
 
-        observer::attempt_submitted($event);
+        observer::attempt_graded($event);
 
         $grade->update_from_db();
         $this->assertFalse($grade->is_locked());
@@ -105,7 +105,7 @@ final class observer_test extends \advanced_testcase {
         [$event, $grade] = $this->create_attempt_event(9.0, 10.0, false, false);
         $DB->delete_records('grade_grades', ['id' => $grade->id]);
 
-        observer::attempt_submitted($event);
+        observer::attempt_graded($event);
 
         $this->assertFalse($DB->record_exists('grade_grades', [
             'itemid' => $grade->itemid,
@@ -114,13 +114,13 @@ final class observer_test extends \advanced_testcase {
     }
 
     /**
-     * Create a submitted-attempt event and optional grade state.
+     * Create a graded-attempt event and optional grade state.
      *
      * @param float $attemptsum Attempt points earned.
      * @param float $quizsum Maximum attempt points.
      * @param bool $locked Whether the grade starts locked.
      * @param bool $overridden Whether the grade starts overridden.
-     * @return array{0: attempt_submitted, 1: grade_grade}
+     * @return array{0: attempt_graded, 1: grade_grade}
      */
     private function create_attempt_event(
         float $attemptsum,
@@ -177,7 +177,7 @@ final class observer_test extends \advanced_testcase {
         ];
         $attempt->id = $DB->insert_record('quiz_attempts', $attempt);
 
-        $event = attempt_submitted::create([
+        $event = attempt_graded::create([
             'context' => context_module::instance($cm->id),
             'objectid' => $attempt->id,
             'relateduserid' => $user->id,
