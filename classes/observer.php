@@ -41,6 +41,10 @@ class observer {
         $attempt = $event->get_record_snapshot('quiz_attempts', $event->objectid);
         $quiz    = $event->get_record_snapshot('quiz', $attempt->quiz);
 
+        if ($quiz->sumgrades <= 0) {
+            return;
+        }
+
         $gradefraction = $attempt->sumgrades / $quiz->sumgrades;
 
         if ($gradefraction >= 0.8) { // Is the new grade 80% or better?
