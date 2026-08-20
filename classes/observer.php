@@ -25,7 +25,7 @@
 namespace local_nolockwhenpassed;
 
 /**
- * Event observer for submitted quiz attempts.
+ * Event observer for graded quiz attempts.
  *
  * @package   local_nolockwhenpassed
  * @copyright 2017 James Pratt
@@ -33,11 +33,11 @@ namespace local_nolockwhenpassed;
  */
 class observer {
     /**
-     * Unlock a passing quiz grade after an attempt is submitted.
+     * Unlock a passing quiz grade after an attempt is graded.
      *
-     * @param \mod_quiz\event\attempt_submitted $event The submitted attempt event.
+     * @param \mod_quiz\event\attempt_graded $event The graded attempt event.
      */
-    public static function attempt_submitted(\mod_quiz\event\attempt_submitted $event) {
+    public static function attempt_graded(\mod_quiz\event\attempt_graded $event) {
         $attempt = $event->get_record_snapshot('quiz_attempts', $event->objectid);
         $quiz    = $event->get_record_snapshot('quiz', $attempt->quiz);
 
@@ -58,7 +58,6 @@ class observer {
                     // Turn overridden and locked off.
                     $grade->set_overridden(false);
                     $grade->set_locked(0);
-                    $grade->update('local_nolockwhenpassed');
                 }
             }
         }

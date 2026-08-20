@@ -2,9 +2,10 @@
 
 ## Purpose
 
-`local_nolockwhenpassed` observes submitted quiz attempts. When the attempt score
-is at least 80 percent, it clears lock and override state from the learner's quiz
-grade so Moodle can retain the passing result.
+`local_nolockwhenpassed` observes automatically graded quiz attempts. After the
+attempt score is persisted, a score of at least 80 percent clears lock and
+override state from the learner's quiz grade so Moodle can retain the passing
+result.
 
 ## Requirements
 

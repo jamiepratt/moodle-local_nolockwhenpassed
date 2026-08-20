@@ -19,7 +19,7 @@ namespace local_nolockwhenpassed;
 use context_module;
 use grade_grade;
 use grade_item;
-use mod_quiz\event\attempt_submitted;
+use mod_quiz\event\attempt_graded;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -27,7 +27,7 @@ global $CFG;
 require_once($CFG->libdir . '/gradelib.php');
 
 /**
- * Tests submitted attempts for quizzes without gradeable points.
+ * Tests graded attempts for quizzes without gradeable points.
  *
  * @package   local_nolockwhenpassed
  * @copyright 2026 Jamie Pratt
@@ -42,7 +42,7 @@ final class zero_sumgrades_test extends \advanced_testcase {
         $this->resetAfterTest();
         [$event, $grade] = $this->create_attempt_event(0.0, 0.0);
 
-        observer::attempt_submitted($event);
+        observer::attempt_graded($event);
 
         $grade->update_from_db();
         $this->assertTrue($grade->is_locked());
@@ -56,7 +56,7 @@ final class zero_sumgrades_test extends \advanced_testcase {
         $this->resetAfterTest();
         [$event, $grade] = $this->create_attempt_event(0.0, -1.0);
 
-        observer::attempt_submitted($event);
+        observer::attempt_graded($event);
 
         $grade->update_from_db();
         $this->assertTrue($grade->is_locked());
@@ -70,7 +70,7 @@ final class zero_sumgrades_test extends \advanced_testcase {
         $this->resetAfterTest();
         [$event, $grade] = $this->create_attempt_event(0.8, 1.0);
 
-        observer::attempt_submitted($event);
+        observer::attempt_graded($event);
 
         $grade->update_from_db();
         $this->assertFalse($grade->is_locked());
@@ -78,11 +78,11 @@ final class zero_sumgrades_test extends \advanced_testcase {
     }
 
     /**
-     * Create a submitted-attempt event and protected grade.
+     * Create a graded-attempt event and protected grade.
      *
      * @param float $attemptsum Attempt points earned.
      * @param float $quizsum Maximum attempt points.
-     * @return array{0: attempt_submitted, 1: grade_grade}
+     * @return array{0: attempt_graded, 1: grade_grade}
      */
     private function create_attempt_event(float $attemptsum, float $quizsum): array {
         global $DB;
@@ -134,7 +134,7 @@ final class zero_sumgrades_test extends \advanced_testcase {
         ];
         $attempt->id = $DB->insert_record('quiz_attempts', $attempt);
 
-        $event = attempt_submitted::create([
+        $event = attempt_graded::create([
             'context' => context_module::instance($cm->id),
             'objectid' => $attempt->id,
             'relateduserid' => $user->id,
