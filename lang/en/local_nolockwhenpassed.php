@@ -22,6 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'nolockwhenpassed';
+$string['pluginname'] = 'Unlock passing quiz grades';
 $string['privacy:metadata'] = 'Grade unlocking does not store personal data itself. Quiz attempts and grades are stored by ' .
     'Moodle core and activity subsystems.';
